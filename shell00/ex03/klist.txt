@@ -1,0 +1,7 @@
+Credentials cache: API:1424347
+        Principal: pcardoso@42SP.ORG.BR
+
+  Issued                Expires               Principal
+Sep 30 15:11:25 2019  Oct  1 01:11:27 2019  krbtgt/42SP.ORG.BR@42SP.ORG.BR
+Sep 30 15:11:25 2019  Oct  1 01:11:27 2019  HTTP/student-storage.42sp.org.br@42SP.ORG.BR
+Sep 30 15:48:19 2019  Oct  1 01:11:27 2019  host/vogsphere.42sp.org.br@42SP.ORG.BR
