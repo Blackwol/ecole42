@@ -6,7 +6,7 @@
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 12:17:46 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 14:07:59 by pcardoso         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:00:21 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int		main(int ac, char **av)
 	if (ac == 2)
 		print_bits(atoi(av[1]));
 	else
-		printf("Erreur d'arguments\n");
+		printf("Erros de argumentos\n");
 	return (0);
 }
