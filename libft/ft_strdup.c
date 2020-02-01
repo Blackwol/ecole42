@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/23 12:40:38 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/30 19:10:48 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+char	*ft_strdup(const char *s1)
 {
-	int i;
+	char	*ptr;
+	int		c;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	c = ft_strlen(s1);
+	if (!(ptr = malloc(sizeof(char) * (c + 1))))
+		return (NULL);
+	while (c >= 0)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		ptr[c] = (char)s1[c];
+		c--;
 	}
-	write(1, "\n", 1);
+	return (ptr);
 }

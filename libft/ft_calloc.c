@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/23 12:23:26 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/30 14:52:33 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int i;
+	void	*ptr;
+	size_t	full_size;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
-	{
-		write(1, &argv[0][i], 1);
-		i++;
-	}
-	write(1, "\n", 1);
+	full_size = count * size;
+	if (!(ptr = malloc(full_size)))
+		return (NULL);
+	ft_memset(ptr, 0, full_size);
+	return (ptr);
 }

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/28 18:32:16 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/28 18:57:11 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+t_list	*ft_lstnew(void *content)
 {
-	int i;
+	t_list	*lista;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
-	{
-		write(1, &argv[0][i], 1);
-		i++;
-	}
-	write(1, "\n", 1);
+	if (!(lista = malloc(sizeof(t_list))))
+		return (NULL);
+	lista->content = content;
+	lista->next = NULL;
+	return (lista);
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/20 19:39:59 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/31 11:27:33 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+char		*ft_strrchr(const char *s, int c)
 {
-	int i;
+	int count;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	count = ft_strlen(s);
+	while (count >= 0)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		if (s[count] == c)
+			return ((char *)&s[count]);
+		count--;
 	}
-	write(1, "\n", 1);
+	return (NULL);
 }

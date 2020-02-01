@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/22 16:41:08 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/30 19:02:43 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int i;
+	size_t	c;
+	int		res;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
-	{
-		write(1, &argv[0][i], 1);
-		i++;
-	}
-	write(1, "\n", 1);
+	res = 0;
+	c = 0;
+	if (!n)
+		return (0);
+	while (((unsigned char *)s1)[c] == ((unsigned char *)s2)[c] && n - 1 > c)
+		c++;
+	res = ((unsigned char *)s1)[c] - ((unsigned char *)s2)[c];
+	return (res);
 }

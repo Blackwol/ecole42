@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/28 19:41:51 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/29 10:06:32 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	int i;
+	t_list *aux;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	if (*lst)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		aux = *lst;
+		while (aux->next)
+			aux = aux->next;
+		new->next = aux->next;
+		aux->next = new;
 	}
-	write(1, "\n", 1);
+	else
+	{
+		new->next = *lst;
+		*lst = new;
+	}
 }

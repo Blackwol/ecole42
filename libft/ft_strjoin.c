@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/23 19:54:27 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/25 15:21:26 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int i;
+	char	*ptr;
+	int		c1;
+	int		c2;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	if (!(ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * (sizeof(char)))))
+		return (NULL);
+	c1 = 0;
+	c2 = 0;
+	while (s1[c1])
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		ptr[c1] = s1[c1];
+		c1++;
 	}
-	write(1, "\n", 1);
+	while (s2[c2])
+	{
+		ptr[c1] = s2[c2];
+		c1++;
+		c2++;
+	}
+	ptr[c1] = '\0';
+	return (ptr);
 }

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/22 15:28:58 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/02/01 12:19:54 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int i;
+	char		*p;
+	const char	*s;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	p = dst;
+	s = src;
+	if (p > s)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		while (len)
+		{
+			p[len - 1] = s[len - 1];
+			len--;
+		}
 	}
-	write(1, "\n", 1);
+	else
+		ft_memcpy(p, s, len);
+	return (dst);
 }

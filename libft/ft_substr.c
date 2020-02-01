@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/23 19:36:14 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/25 15:14:51 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int i;
+	size_t	c;
+	char	*substr;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	c = 0;
+	if (!(substr = malloc(sizeof(char) * len + 1)))
+		return (NULL);
+	if ((int)start > ft_strlen(s))
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		substr[c] = '\0';
+		return (substr);
 	}
-	write(1, "\n", 1);
+	while (c < len && s[c + start])
+	{
+		substr[c] = s[c + start];
+		c++;
+	}
+	substr[c] = '\0';
+	return (substr);
 }

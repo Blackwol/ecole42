@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/29 12:30:28 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/29 13:33:38 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int i;
+	t_list *list;
+	t_list *list_el;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	list = NULL;
+	while (lst)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		if (!(list_el = ft_lstnew(f(lst->content))))
+		{
+			ft_lstclear(&lst, del);
+			return (NULL);
+		}
+		lst = lst->next;
+		ft_lstadd_back(&list, list_el);
 	}
-	write(1, "\n", 1);
+	return (list);
 }

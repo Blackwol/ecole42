@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/21 17:42:23 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/02/01 11:03:59 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+void	ft_bzero(void *s, size_t n)
 {
-	int i;
+	char	*ptr;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	ptr = s;
+	while (n)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		*ptr = 0;
+		ptr++;
+		n--;
 	}
-	write(1, "\n", 1);
 }

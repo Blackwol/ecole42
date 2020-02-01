@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/24 15:59:21 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/25 15:14:11 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int i;
+	size_t	count;
+	char	*ptr;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	count = 0;
+	if (s && f)
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		if (!(ptr = malloc(sizeof(char) * ft_strlen(s) + 1)))
+			return (NULL);
+		while (s[count])
+		{
+			ptr[count] = f(count, s[count]);
+			count++;
+		}
+		ptr[count] = '\0';
+		return (ptr);
 	}
-	write(1, "\n", 1);
+	return (NULL);
 }

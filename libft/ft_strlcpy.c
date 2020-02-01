@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_program_name.c                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 21:21:20 by pcardoso          #+#    #+#             */
-/*   Updated: 2019/10/24 16:44:01 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/01/20 11:36:00 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/01/30 19:34:15 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int		main(int argc, char **argv)
+size_t				ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int i;
+	size_t count;
 
-	i = 0;
-	(void)argc;
-	while (argv[0][i])
+	count = 0;
+	if (size == 0)
+		return (ft_strlen(src));
+	while ((src[count] != '\0') && (count < size - 1))
 	{
-		write(1, &argv[0][i], 1);
-		i++;
+		dst[count] = src[count];
+		count++;
 	}
-	write(1, "\n", 1);
+	dst[count] = '\0';
+	return (ft_strlen(src));
 }
