@@ -1,43 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 16:18:50 by pcardoso          #+#    #+#             */
-/*   Updated: 2020/02/11 16:57:02 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/03/09 17:22:11 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/03/09 17:22:27 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*str[OPEN_MAX];
+	static char	str[OPEN_MAX][BUFFER_SIZE + 1];
 	int			read_count;
 	char		*tmp_str;
 
 	if (BUFFER_SIZE <= 0 || !line || (read(fd, NULL, 0) < 0) || fd < 0)
 		return (-1);
-	if (!str[fd])
-		str[fd] = ft_strdup("");
 	tmp_str = malloc(sizeof(char *) * BUFFER_SIZE + 1);
-	while ((read_count = read(fd, tmp_str, BUFFER_SIZE)) > 0)
+	tmp_str[0] = '\0';
+	if (str[fd])
+		tmp_str = ft_strjoin(tmp_str, str[fd]);
+	while (!has_break_line(tmp_str) &&
+			(read_count = read(fd, str[fd], BUFFER_SIZE)) > 0)
 	{
-		tmp_str[read_count] = '\0';
-		if (!str[fd])
-			str[fd] = ft_strdup(tmp_str);
-		else
-			str[fd] = ft_strjoin(str[fd], tmp_str);
-		if (has_break_line(str[fd]))
+		str[fd][read_count] = '\0';
+		tmp_str = ft_strjoin(tmp_str, str[fd]);
+		if (has_break_line(tmp_str))
 			break ;
 	}
-	free(tmp_str);
 	if (read_count < 0)
 		return (-1);
-	*line = get_first_line(str[fd]);
-	return (return_value(read_count == 0 ? 0 : 1, str[fd], *line));
+	*line = get_first_line(tmp_str);
+	free(tmp_str);
+	return (return_value(read_count == 0 ? 0 : 1, str[fd]));
 }
 
 int		has_break_line(char *s)

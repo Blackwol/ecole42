@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 16:19:08 by pcardoso          #+#    #+#             */
-/*   Updated: 2020/02/11 17:41:10 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/02/20 11:25:40 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/02/20 11:27:36 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_substr(char *s, unsigned long start, unsigned long len);
 int		has_break_line(char *s);
 void	*ft_memmove(void *dst, const void *src, unsigned long len);
 void	*ft_memcpy(void *dst, const void *src, unsigned long n);
-int		return_value(int read_count, char *str, char *line);
+int		return_value(int read_count, char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
 #endif

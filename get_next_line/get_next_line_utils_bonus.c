@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 16:18:59 by pcardoso          #+#    #+#             */
-/*   Updated: 2020/01/29 16:19:00 by pcardoso         ###   ########.fr       */
+/*   Created: 2020/03/09 17:22:43 by pcardoso          #+#    #+#             */
+/*   Updated: 2020/03/09 17:23:02 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		ft_strlen(char *s)
 {
@@ -47,13 +47,13 @@ char	*ft_substr(char *s, unsigned long start, unsigned long len)
 char	*get_first_line(char *s)
 {
 	int		count;
-	char	*str;
+	char	*aux;
 
 	count = 0;
 	while (s[count] && s[count] != '\n')
 		count++;
-	str = ft_substr(s, 0, count);
-	return (str);
+	aux = ft_substr(s, 0, count);
+	return (aux);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -79,18 +79,24 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	ptr[c1] = '\0';
 	free(s1);
+	s1 = NULL;
 	return (ptr);
 }
 
-int		return_value(int read_count, char *str, char *line)
+int		return_value(int read_count, char *str)
 {
-	int		count;
 	char	*aux;
 
 	aux = ft_strdup(str);
-	count = ft_strlen(line) + 1;
-	while (count--)
+	while (str[0])
+	{
+		if (str[0] == '\n')
+		{
+			ft_memmove(str, str + 1, ft_strlen(str));
+			break ;
+		}
 		ft_memmove(str, str + 1, ft_strlen(str));
+	}
 	if ((aux[0] == '\0' && !read_count) || !has_break_line(aux))
 	{
 		free(aux);
