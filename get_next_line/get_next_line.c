@@ -3,102 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcardoso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcardoso </var/mail/pcardoso>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/19 18:28:39 by pcardoso          #+#    #+#             */
-/*   Updated: 2020/02/19 18:28:41 by pcardoso         ###   ########.fr       */
+/*   Created: 2021/08/22 22:04:55 by pcardoso          #+#    #+#             */
+/*   Updated: 2021/08/22 22:05:06 by pcardoso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_next_line(int fd, char **line)
+static char	*free_return_null(char **next_line)
 {
-	static char	str[OPEN_MAX][BUFFER_SIZE + 1];
-	int			read_count;
-	char		*tmp_str;
+	free(*next_line);
+	return (NULL);
+}
 
-	if (BUFFER_SIZE <= 0 || !line || (read(fd, NULL, 0) < 0) || fd < 0)
-		return (-1);
-	tmp_str = malloc(sizeof(char *) * BUFFER_SIZE + 1);
-	tmp_str[0] = '\0';
-	if (str[fd])
-		tmp_str = ft_strjoin(tmp_str, str[fd]);
-	while (!has_break_line(tmp_str) &&
-			(read_count = read(fd, str[fd], BUFFER_SIZE)) > 0)
+static int	has_newline(char **next_line, char *buffer)
+{
+	char	*new;
+
+	new = buffer;
+	while (*new)
 	{
-		str[fd][read_count] = '\0';
-		tmp_str = ft_strjoin(tmp_str, str[fd]);
-		if (has_break_line(tmp_str))
+		if (*new == '\n')
 			break ;
+		new++;
 	}
-	if (read_count < 0)
-		return (-1);
-	*line = get_first_line(tmp_str);
-	free(tmp_str);
-	return (return_value(read_count == 0 ? 0 : 1, str[fd]));
+	if (*new != '\n')
+		new = NULL;
+	if (new == NULL)
+		return (0);
+	*next_line = strjoin_newline(*next_line, buffer);
+	ft_memmove(buffer, new, ft_strlen(new));
+	buffer[ft_strlen(new)] = '\0';
+	return (1);
 }
 
-int		has_break_line(char *s)
+static void	read_nextline(int fd, char **next_line, char *buffer)
 {
-	int	c;
+	int		read_ret;
+	int		has_line;
 
-	c = 0;
-	while (s[c])
-		if (s[c++] == '\n')
-			return (1);
-	return (0);
-}
-
-void	*ft_memmove(void *dst, const void *src, unsigned long len)
-{
-	char		*p;
-	const char	*s;
-
-	p = dst;
-	s = src;
-	if (p > s)
+	read_ret = read(fd, buffer, BUFFER_SIZE);
+	while (read_ret > 0)
 	{
-		while (len)
+		buffer[read_ret] = '\0';
+		has_line = has_newline(next_line, buffer);
+		if (has_line)
+			break ;
+		else
 		{
-			p[len - 1] = s[len - 1];
-			len--;
+			*next_line = ft_strjoin(*next_line, buffer);
+			if (!(*next_line))
+				break ;
 		}
+		read_ret = read(fd, buffer, BUFFER_SIZE);
 	}
-	else
-		ft_memcpy(p, s, len);
-	return (dst);
 }
 
-void	*ft_memcpy(void *dst, const void *src, unsigned long n)
+static int	fix_check_buffer(char **next_line, char *buffer)
 {
-	size_t	c;
-	char	*p;
+	int		i;
+	char	*tmp;
 
-	p = dst;
-	c = 0;
-	if (!dst && !src && n)
-		return (NULL);
-	while (c < n)
+	tmp = buffer;
+	tmp++;
+	i = ft_strlen(tmp);
+	ft_memmove(buffer, tmp, i);
+	buffer[i] = '\0';
+	i = has_newline(next_line, buffer);
+	if (i <= 0)
 	{
-		p[c] = ((const char *)src)[c];
-		c++;
+		*next_line = ft_strjoin(*next_line, buffer);
+		return (0);
 	}
-	return (dst);
+	return (1);
 }
 
-char	*ft_strdup(char *s1)
+char	*get_next_line(int fd)
 {
-	char	*ptr;
-	int		c;
+	int			newline_flag;
+	char		*next_line;
+	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
 
-	c = ft_strlen(s1);
-	if (!(ptr = malloc(sizeof(char) * (c + 1))))
-		return (NULL);
-	while (c >= 0)
-	{
-		ptr[c] = (char)s1[c];
-		c--;
-	}
-	return (ptr);
+	next_line = ft_strdup("");
+	if (fd < 0 || fd > FOPEN_MAX)
+		return (free_return_null(&next_line));
+	if (read(fd, NULL, 0) < 0 || BUFFER_SIZE < 1 || !next_line)
+		return (free_return_null(&next_line));
+	newline_flag = 0;
+	if (buffer[fd][0] == '\n')
+		newline_flag = fix_check_buffer(&next_line, buffer[fd]);
+	if (!newline_flag)
+		read_nextline(fd, &next_line, buffer[fd]);
+	if (next_line[0] == '\0')
+		return (free_return_null(&next_line));
+	return (next_line);
 }
